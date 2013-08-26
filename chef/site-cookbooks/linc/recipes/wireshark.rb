@@ -92,7 +92,7 @@ if node['platform_family'] == 'debian'
   end
 
   ofdissector_dir = File.join(Chef::Config[:file_cache_path], "wireshark-ofdissector")
-  
+
   git "wireshark-ofdissector" do
     repository "https://github.com/CPqD/ofdissector"
     reference "master"
@@ -105,7 +105,7 @@ if node['platform_family'] == 'debian'
     cwd "#{ofdissector_dir}/src"
     code <<-EOS
       (export WIRESHARK=/usr/include/wireshark && scons install)
-      (cd /usr/lib/wireshark/libwireshark1/plugins
+      cd /usr/lib/wireshark/libwireshark1/plugins
       (cp #{ofdissector_dir}/src/openflow.so . && chmod 644 openflow.so)
     EOS
     action :nothing
