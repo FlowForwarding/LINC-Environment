@@ -1,0 +1,8 @@
+{
+    "id": "linc",
+    "repo": {
+        "name": "linc",
+        "url": "git://github.com/FlowForwarding/LINC-Switch",
+        "destination": "/home/vagrant/development/linc"
+    }
+}

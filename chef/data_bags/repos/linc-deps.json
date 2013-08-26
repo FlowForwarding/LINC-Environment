@@ -1,0 +1,25 @@
+{
+    "id": "linc-deps",
+    "repos": [
+        {
+            "name": "of_protocol",
+            "url": "git://github.com/FlowForwarding/of_protocol",
+            "destination": "/home/vagrant/development/linc-deps/of_protocol"
+        },
+        {
+            "name": "enetconf",
+            "url": "git://github.com/FlowForwarding/enetconf",
+            "destination": "/home/vagrant/development/linc-deps/enetconf"
+        },
+        {
+            "name": "of_config",
+            "url": "git://github.com/FlowForwarding/of_config",
+            "destination": "/home/vagrant/development/linc-deps/of_config"
+        },
+        {
+            "name": "pkt",
+            "url": "git://github.com/esl/pkt",
+            "destination": "/home/vagrant/development/linc-deps/pkt"
+        }
+    ]
+}
