@@ -1,18 +1,24 @@
 # VirutalBox Guest Additions installer for ubuntu cloud images.
 # Motivated by: https://github.com/dotless-de/vagrant-vbguest/issues/43#issuecomment-21780432
-class CloudUbuntuVagrant < VagrantVbguest::Installers::Ubuntu
-  def install(opts=nil, &block)
-    communicate.sudo('sed -i "/^# deb.*multiverse/ s/^# //" /etc/apt/sources.list ', opts, &block)
-    communicate.sudo('apt-get update', opts, &block)
-    communicate.sudo('apt-get -y -q purge virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11', opts, &block)
-    @vb_uninstalled = true
-    super
-  end
+begin
+  require 'vagrant-vbguest'
+  class CloudUbuntuVagrant < VagrantVbguest::Installers::Ubuntu
+    def install(opts=nil, &block)
+      communicate.sudo('sed -i "/^# deb.*multiverse/ s/^# //" /etc/apt/sources.list ', opts, &block)
+      communicate.sudo('apt-get update', opts, &block)
+      communicate.sudo('apt-get -y -q purge virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11', opts, &block)
+      @vb_uninstalled = true
+      super
+    end
 
-  def running?(opts=nil, &block)
-    return false if @vb_uninstalled
-    super
+    def running?(opts=nil, &block)
+      return false if @vb_uninstalled
+      super
+    end
   end
+  vagrant_vbguest_installed = true
+rescue LoadError
+  vagrant_vbguest_installed = false
 end
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
@@ -30,7 +36,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "development", "/home/vagrant/development"
 
   # Set the custom installer for VirtualBox Guest Additions.
-  config.vbguest.installer = CloudUbuntuVagrant
+  if vagrant_vbguest_installed
+    config.vbguest.installer = CloudUbuntuVagrant
+  end
 
   # VirtualBox provider configuration.
   config.vm.provider :virtualbox do |vb|
