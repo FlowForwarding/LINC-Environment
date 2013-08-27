@@ -40,6 +40,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vbguest.installer = CloudUbuntuVagrant
   end
 
+  # Set the hostname
+  config.vm.hostname = "linc-dev"
+
   # VirtualBox provider configuration.
   config.vm.provider :virtualbox do |vb|
     vb.gui = true
