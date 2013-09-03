@@ -7,5 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "linc::linc-code"
+include_recipe "linc::create_dirs"
+include_recipe "linc::checkout"
 include_recipe "linc::wireshark"

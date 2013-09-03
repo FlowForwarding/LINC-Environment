@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: linc
-# Recipe:: linc-code
+# Recipe:: checkout
 #
 # Copyright 2013, YOUR_COMPANY_NAME
 #
@@ -16,20 +16,8 @@ linc_info = data_bag_item 'repos', 'linc'
 linc_deps_info = data_bag_item 'repos', 'linc-deps'
 
 #------------------------------------------------------------------------------#
-# Create an appropriate directory structure and clone/update LINC-Switch
-# repository
+# Clone/update LINC-Switch repository
 #------------------------------------------------------------------------------#
-
-directory dir = linc_info['repo']['destination'] do
-  owner "vagrant"
-  group "vagrant"
-  mode 00755
-  action :create
-  recursive true
-  not_if {
-    File.exist?(dir)
-  }
-end
 
 git "linc" do
   repository linc_info['repo']['url']
@@ -41,25 +29,10 @@ git "linc" do
 end
 
 #------------------------------------------------------------------------------#
-# If LINC-Swtich dependencies are required create an appropriate directory
-# structure and clone/update LINC-Switch dependencies
+# Clone/update LINC-Switch dependencies
 #------------------------------------------------------------------------------#
 
 linc_deps_info['repos'].each do |dep|
-  directory dir = dep['destination'] do
-    owner "vagrant"
-    group "vagrant"
-    mode 00755
-    action :create
-    recursive true
-    only_if {
-      node['linc']['deps'] == true
-    }
-    not_if {
-      File.exist?(dir)
-    }
-  end
-
   git "linc-#{dep['name']}-dep" do
     repository dep['url']
     reference "master"
