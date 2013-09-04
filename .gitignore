@@ -4,3 +4,5 @@ chef/cookbooks
 chef/tmp
 # Ingore .vagrant dir
 .vagrant
+#Ignore file endig with ~
+*~
