@@ -1,0 +1,35 @@
+#!/bin/sh
+
+case $1 in
+    "setup")
+        <%= @config_gen_bin %> <%= @config_gen_bin_args %>
+        cd <%= @linc_root %> && sudo make rel
+        for int in <%= @interfaces %>; do
+            sudo tunctl -t ${int} && sudo ifconfig ${int} up
+        done
+        ;;
+    "switch")
+        sudo <%= @linc_bin %> <%= @linc_bin_args %>
+        ;;
+    "controller")
+        cd `dirname <%= @controller_bin %>`
+        ./`basename <%= @controller_bin %>` <%= @controller_bin_args %>
+        ;;
+    "wireshark")
+        for int in <%= @interfaces %>; do
+            wireshark -i ${int} -k &
+        done
+        wireshark -i lo -k &
+        ;;
+    "ping")
+        sudo tcpreplay -i <%= @ping_in_int %> <%= @ping_data %> > /dev/null
+        ;;
+    "teardown")
+        cd <%= @linc_root %> && git checkout <%= @sys_config_relative %>
+        for int in <%= @interfaces %>; do
+            sudo ifconfig ${int} down && sudo tunctl -d ${int}
+        done
+        ;;
+    *)
+        echo "${0} setup|switch|controller|wireshark|ping|teardown"
+esac

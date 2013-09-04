@@ -10,3 +10,4 @@
 include_recipe "linc::create_dirs"
 include_recipe "linc::checkout"
 include_recipe "linc::wireshark"
+include_recipe "linc::prepare_ping_example"

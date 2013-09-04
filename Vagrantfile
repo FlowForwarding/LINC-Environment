@@ -69,7 +69,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :install_method => 'esl'
       },
       :linc => {
-        :deps => true
+        :deps => true,
+        :ping_example => true
       }
     }
 
