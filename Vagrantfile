@@ -43,9 +43,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the hostname
   config.vm.hostname = "linc-dev"
 
+  # Enable X11 forwarding
+  config.ssh.forward_x11 = true
+
   # VirtualBox provider configuration.
   config.vm.provider :virtualbox do |vb|
-    vb.gui = true
+    # Set to true if you want the virtualbox to start the VM's UI
+    vb.gui = false
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
