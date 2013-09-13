@@ -5,8 +5,10 @@ site 'http://community.opscode.com/api/v1'
 
 cookbook 'git'
 cookbook 'erlang'
+cookbook 'xfce4'
 cookbook 'linc',
    :path => 'site-cookbooks/linc'
-cookbook 'xfce4'
 cookbook 'wireshark_ofp',
    :path => 'site-cookbooks/wireshark_ofp'
+cookbook 'mininet',
+   :path => 'site-cookbooks/mininet'

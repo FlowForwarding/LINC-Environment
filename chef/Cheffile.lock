@@ -29,6 +29,11 @@ PATH
     linc (0.1.0)
 
 PATH
+  remote: site-cookbooks/mininet
+  specs:
+    mininet (0.1.0)
+
+PATH
   remote: site-cookbooks/wireshark_ofp
   specs:
     wireshark_ofp (0.1.0)
@@ -37,6 +42,7 @@ DEPENDENCIES
   erlang (>= 0)
   git (>= 0)
   linc (>= 0)
+  mininet (>= 0)
   wireshark_ofp (>= 0)
   xfce4 (>= 0)
 
