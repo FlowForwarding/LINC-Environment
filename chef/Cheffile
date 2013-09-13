@@ -8,3 +8,5 @@ cookbook 'erlang'
 cookbook 'linc',
    :path => 'site-cookbooks/linc'
 cookbook 'xfce4'
+cookbook 'wireshark_ofp',
+   :path => 'site-cookbooks/wireshark_ofp'

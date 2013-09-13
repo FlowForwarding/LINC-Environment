@@ -1,61 +1,60 @@
-LINC-environment
-================
+# LINC-environment #
 
-Environment setup for FlowForwading/LINC-Switch
+Environment setup for [FlowForwarding/LINC-Switch](https://github.com/FlowForwarding/LINC-Switch).
 
-Setup
-=====
+## Setup ##
 
-> The commands provided in the following steps work on Ubuntu.
+> Below commands  work on Ubuntu.
 
-1. Install [Vagrant](http://docs.vagrantup.com/v2/installation/index.html): `dpkg -i vagrant_<version>_<platform>.deb`.
-1. Install Virtual Box: `sudo apt-get install virutalbox`.
-1. Install  vagrant-bindler plugin: `vagrant plugin install bindler && vagrant bindler setup`.
-1. Clone this repository: `git clone https://github.com/mentels/LINC-environment`
-1. Enter the cloned repository and install required plugins: `cd LINC-environment && vagrant plugin bundle`.
-1. Run vagrant to setup a machine for LINC development: `vagrant up`. Now wait for vagrant to finish the job.
+1. Install [Vagrant](http://docs.vagrantup.com/v2/installation/index.html):  
+`dpkg -i vagrant_<version>_<platform>.deb`
+1. Install Virtual Box:  
+`sudo apt-get install virutalbox`
+1. Install  vagrant-bindler plugin:  
+`vagrant plugin install bindler && vagrant bindler setup`
+1. Clone this repository:  
+`git clone https://github.com/mentels/LINC-environment`
+1. Enter the cloned repository and install required plugins:  
+`cd LINC-environment && vagrant plugin bundle`
+1. Run vagrant to setup a machine for LINC development:  
+`vagrant up`
 
 After running the above steps you will end up with a virtual machine equipped with:
 * Erlang,
-* Xfce4,
 * cloned [LINC](https://github.com/FlowForwarding/LINC-Switch) repository,
 * Wireshark with OpenFlow 1.3 dissector installed,
 * cloned LINC dependencies (optional),
-* `ping_example` script generated in the home directory (optional).
+* `ping_example` script generated in the home directory (optional),
+* Mininet with support for LINC-Switch (optional).
 
-Usage
-=====
+## Usage ##
 
-Accessing the virtual machine
------------------------------
+### Accessing the virtual machine ###
 
-Username: vagrant
-Password: vagrant
+Username: **vagrant**  
+Password: **vagrant**
 
-The virtual machine can be accessed in two ways:
-* by vagrant,
-* by GUI provided by VirtualBox.
+The virtual machine can be accessed via ssh or GUI provided by VirtualBox.
 
-Logging in to the machine by vagrant is very easy, you just have to type `vagrant ssh` in the project directory. By default the VM has the X11 forwarding enabled so if you run Wireshark it's GUI will be forwarded to the hosts' UI. To change this behaviour and make the VM start with the UI set the `vb.gui` option in `Vagrantfile` to true. Then VirtualBox will display the UI in which you has to log in and start Xfce4 issuing `startx`.
+Logging in to the machine through ssh is very easy, you just have to type `vagrant ssh` in the project root directory. By default the VM has the X11 forwarding enabled so if you run Wireshark it's GUI will be forwarded to the hosts' UI. To change this behaviour and make the VM start with the UI, set the `vb.gui` option in `Vagrantfile` to `true` and uncomment the line `#chef.add_recipe 'xfce4'`. Then VirtualBox will display the UI in which you has to log in and start Xfce4 issuing `startx`.
 
 
-Developing
-----------
+### Developing ###
 
 After booting the machine the LINC code is cloned to `/home/vagrant/development/linc`. By default also LINC dependencies are cloned and you can find them in `/home/vagrant/development/linc-deps`. The entire `/home/vagrant/development` directory is shared with your host in `development` under project root directory. Thanks to that you can use your own editor to edit files.
 
-Ping Example
-------------
+### Ping Example ###
 
-By default the machine will have a script `ping_example` in the `/home/vagrant` directory. This script allow you to run simple example presenting LINC-Switch and the OpenFlow controller operation. Running the example you can observe OpenFlow protocol messages between the switch and the controller and it can server as a starting point for writing more complex examples.
+By default the machine will have a script `ping_example` in the `/home/vagrant` directory. This script allow you to run simple example presenting LINC-Switch and the OpenFlow controller operation. While running the example you can observe OpenFlow protocol messages between the switch and the controller and it can serve as a starting point for writing more complex examples.
 
-To run the example do the following:
-* run `ping_example setup` to compile the code, configure  two tap interfaces and generate switch configuration for one logical switch connecting to these two interfaces,
-* run `ping_example wireshark` to start three instances of Wireshark capturing on tap0, tap1 and loopback,
-* enter display filter `of13.ofp_header` in the Wireshark capturing on the loopback (lo) interface to see only OpenFlow protocol messages,
-* run `ping_example switch` to start the switch,
-* in another console run `ping_example` controller; you will observe OpenFlow messages exchange related with establishing the connection
-* run `ping_example ping` to send prepared ping message through the tap0; you will observe switch sending the `PacketIn` message to the controller enclosing the packet generated by the ping and then controller sending the `PacketOut` message that will cause the switch flood the packet on rest interfaces - only the tap1 in this case; the switch and controller are started in the debug mode so you should also see appropriate messages on their consoles,
-* to stop the example close the switch's and controller's consoles (Ctrl+g q) and run `ping_example teardown`.
+To run the example follow these steps:
+
+1. Run `~/ping_example setup` to compile the code, configure two tap interfaces and generate switch configuration for one logical switch connecting to these two interfaces.
+1. Run `~/ping_example wireshark` to start three instances of Wireshark capturing on tap0, tap1 and loopback.
+1. Enter display filter `of13.ofp_header` in the Wireshark capturing on the loopback (lo) interface to see only OpenFlow protocol messages.
+1. Run `~/ping_example switch` to start the switch.
+1. Run `~/ping_example controller` (in another console); you will observe OpenFlow messages exchange related with establishing the connection.
+1. Run `~/ping_example ping` to send prepared ping message through the tap0; you will observe switch sending the `PacketIn` message to the controller enclosing the packet generated by the ping and then controller sending the `PacketOut` message that will cause the switch flood the packet on rest interfaces - only the tap1 in this case. The switch and controller are started in the debug mode so you should also see appropriate messages on their consoles.
+1. To stop the example close the switch's and controller's consoles (Ctrl+g q) and run `~/ping_example teardown`.
 
 > The `ping_example setup` and `ping_example teardown` commands overwrite the sys.config file of the LINC-Switch!

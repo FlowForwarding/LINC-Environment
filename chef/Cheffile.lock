@@ -28,9 +28,15 @@ PATH
   specs:
     linc (0.1.0)
 
+PATH
+  remote: site-cookbooks/wireshark_ofp
+  specs:
+    wireshark_ofp (0.1.0)
+
 DEPENDENCIES
   erlang (>= 0)
   git (>= 0)
   linc (>= 0)
+  wireshark_ofp (>= 0)
   xfce4 (>= 0)
 
