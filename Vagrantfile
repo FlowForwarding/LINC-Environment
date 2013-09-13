@@ -76,7 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe 'git'
     chef.add_recipe 'erlang'
-    chef.add_recipe 'xfce4'
+    #chef.add_recipe 'xfce4'
     chef.add_recipe 'linc'
   end
 end
