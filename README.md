@@ -4,7 +4,7 @@ Environment setup for [FlowForwarding/LINC-Switch](https://github.com/FlowForwar
 
 ## Setup ##
 
-> Below commands  work on Ubuntu.
+> Below commands  work on Ubuntu. If you're on Mac and encounter an error while running `vagrant up` refer to [known issues](#known-issues) section.
 
 1. Install [Vagrant](http://docs.vagrantup.com/v2/installation/index.html):  
 `dpkg -i vagrant_<version>_<platform>.deb`
@@ -58,3 +58,16 @@ To run the example follow these steps:
 1. To stop the example close the switch's and controller's consoles (Ctrl+g q) and run `~/ping_example teardown`.
 
 > The `ping_example setup` and `ping_example teardown` commands overwrite the sys.config file of the LINC-Switch!
+
+### Known issues ###
+
+When running Vagrant with VirtualBox on Mac OS it sometimes cannot connect to a running VM by issuing `vagrant up` reporting following error:
+> The SSH connection was unexpectedly closed by the remote end. This usually indicates that SSH within the guest machine was unable to properly start up. Please boot the VM in GUI mode to check whether it is booting properly
+
+A workaround is to generate ssh config that will allow you to connect to the VM by using ssh directly. To achieve this follow the steps below:
+
+1. Generate ssh config from vagrant and put it into the ssh config file:
+`vagrant ssh-config >> ~/.ssh/config`
+1. By default vagrant set the `Host` option to `default`. Edit the ssh config file and change `default` to whatever you want. For example `linc-dev`.
+1. Now you can connect to the running VM using ssh directly:
+`ssh linc-dev`
