@@ -59,6 +59,13 @@ To run the example follow these steps:
 
 > The `ping_example setup` and `ping_example teardown` commands overwrite the sys.config file of the LINC-Switch!
 
+### Mininet ###
+Mininet is a tool facilitating creation of realistic virtual networks. More you can find on Mininet [official website](http://mininet.org/).
+
+The VM has Mininet on board installed in `/home/vagrant/test-env/mininet` directory. You can use it to setup testing environments for LINC-Switch. All Mininet dependencies and installation of LINC-Switch sit in `/home/vagrant/test-env`.
+
+To get started using Mininet with LINC-Switch see the [tutorial](https://github.com/FlowForwarding/LINC-Switch/blob/master/docs/mininet_integration.md). Note that you should omit the *Installation* section.
+
 ### Known issues ###
 
 #### SHH connection problem on MAC OS ####
