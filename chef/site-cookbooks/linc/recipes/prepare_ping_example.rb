@@ -46,13 +46,13 @@ template "/home/vagrant/ping_example" do
   mode 00755
   variables(
             :config_gen_bin => "#{linc_root}/scripts/config_gen",
-            :config_gen_bin_args => " -s 0 #{interfaces.join(" ")} -o #{linc_root}/#{sys_config_relative}",
+            :config_gen_bin_args => " -s 0 #{interfaces.join(" ")} -o #{linc_root}/#{sys_config_relative} -c tcp:127.0.0.1:6653",
             :linc_root => linc_root,
             :interfaces => interfaces.join(" "),
             :linc_bin => "#{linc_root}/rel/linc/bin/linc",
             :linc_bin_args => "console",
-            :controller_bin => "#{linc_root}/scripts/of_controller_v4.sh",
-            :controller_bin_args => "-d -p 6633 -s table_miss",
+            :controller_bin => "#{linc_root}/scripts/of_controller_v5.sh",
+            :controller_bin_args => "-d -p 6653 -s table_miss",
             :ping_in_int => interfaces[0],
             :ping_data => "#{linc_root}/pcap.data/ping.pcap",
             :sys_config_relative => sys_config_relative
