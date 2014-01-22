@@ -8,18 +8,10 @@
 #
 
 #------------------------------------------------------------------------------#
-# Load data from data bags
-#------------------------------------------------------------------------------#
-
-data_bag 'repos'
-linc_info = data_bag_item 'repos', 'linc'
-linc_deps_info = data_bag_item 'repos', 'linc-deps'
-
-#------------------------------------------------------------------------------#
 # Create an appropriate directory structure for LINC-Switch
 #------------------------------------------------------------------------------#
 
-directory dir = linc_info['repo']['destination'] do
+directory dir = node['linc']['destination'] do
   owner "vagrant"
   group "vagrant"
   mode 00755
@@ -35,7 +27,7 @@ end
 # if required
 #------------------------------------------------------------------------------#
 
-linc_deps_info['repos'].each do |dep|
+node['linc']['deps'].each do |key, dep|
   directory dir = dep['destination'] do
     owner "vagrant"
     group "vagrant"
@@ -43,7 +35,7 @@ linc_deps_info['repos'].each do |dep|
     action :create
     recursive true
     only_if {
-      node['linc']['deps'] == true
+      node['linc']['install_deps'] == true
     }
     not_if {
       File.exist?(dir)

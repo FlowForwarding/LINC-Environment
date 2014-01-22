@@ -8,22 +8,14 @@
 #
 
 #------------------------------------------------------------------------------#
-# Load data from data bags
-#------------------------------------------------------------------------------#
-
-data_bag 'repos'
-linc_info = data_bag_item 'repos', 'linc'
-linc_deps_info = data_bag_item 'repos', 'linc-deps'
-
-#------------------------------------------------------------------------------#
 # Clone/update LINC-Switch repository
 #------------------------------------------------------------------------------#
 
 git "linc" do
-  repository linc_info['repo']['url']
+  repository node['linc']['url']
   reference "master"
   action :checkout
-  destination linc_info['repo']['destination']
+  destination node['linc']['destination']
   user "vagrant"
   group "vagrant"
 end
@@ -32,14 +24,14 @@ end
 # Clone/update LINC-Switch dependencies
 #------------------------------------------------------------------------------#
 
-linc_deps_info['repos'].each do |dep|
-  git "linc-#{dep['name']}-dep" do
+node['linc']['deps'].each do |key, dep|
+  git "linc-#{key}-dep" do
     repository dep['url']
     reference "master"
     action :checkout
     destination dep['destination']
     only_if {
-      node['linc']['deps'] == true
+      node['linc']['install_deps'] == true
     }
     user "vagrant"
     group "vagrant"

@@ -62,15 +62,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enable provisioning with Chef-Solo.
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "chef/cookbooks"
-    chef.data_bags_path = "chef/data_bags"
 
     chef.json = {
       :erlang => {
         :install_method => 'esl'
       },
       :linc => {
-        :deps => true,
-        :ping_example => true
+        :install_deps => true,
+        :install_ping_example => true
       }
     }
 
