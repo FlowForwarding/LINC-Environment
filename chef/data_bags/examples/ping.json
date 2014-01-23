@@ -1,4 +1,0 @@
-{
-    "id": "ping",
-    "interfaces": ["tap0", "tap1"]
-}
