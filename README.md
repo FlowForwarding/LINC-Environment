@@ -18,7 +18,7 @@ Environment setup for [FlowForwarding/LINC-Switch](https://github.com/FlowForwar
 1. Install [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) (tested with version 1.3.3):  
 `dpkg -i vagrant_<version>_<platform>.deb`
 1. Install Virtual Box:  
-`sudo apt-get install virutalbox`
+`sudo apt-get install virtualbox`
 1. Install  vagrant-bindler plugin (tested with version 0.1.4):  
 `vagrant plugin install bindler && vagrant bindler setup`
 1. Clone this repository:  
@@ -77,7 +77,7 @@ To get started using Mininet with LINC-Switch see the [tutorial](https://github.
 
 ### Known issues ###
 
-#### SHH connection problem on MAC OS ####
+#### SSH connection problem on MAC OS ####
 When running Vagrant with VirtualBox on Mac OS it sometimes cannot connect to a running VM by issuing `vagrant up` reporting following error:
 > The SSH connection was unexpectedly closed by the remote end. This usually indicates that SSH within the guest machine was unable to properly start up. Please boot the VM in GUI mode to check whether it is booting properly
 
